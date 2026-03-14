@@ -40,7 +40,24 @@
     <% end %>
   </div>
 
-  <!-- Right column: placeholder for activities (coming soon) -->
+  <!-- Right column: Sales Activity -->
   <div class="col-md-6">
+    <h3>Sales Activity</h3>
+
+    <% for activity in @activities %>
+      <% activity_contact = Contact.find_by({ "id" => activity["contact_id"] }) %>
+      <% activity_user = User.find_by({ "id" => activity["user_id"] }) %>
+      <div class="mb-4">
+        <p class="mb-1">
+          <strong>
+            <%= activity["activity_type"].capitalize %> between
+            <a href="/contacts/<%= activity_contact["id"] %>"><%= activity_contact["first_name"] %> <%= activity_contact["last_name"] %></a>
+            and <%= activity_user["first_name"] %>
+            on <%= activity["created_at"].strftime("%A, %B %-d") %>:
+          </strong>
+        </p>
+        <p class="fst-italic mb-0"><%= activity["note"] %></p>
+      </div>
+    <% end %>
   </div>
 </div>

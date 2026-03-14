@@ -59,5 +59,28 @@
         <p class="fst-italic mb-0"><%= activity["note"] %></p>
       </div>
     <% end %>
+
+    <% if User.find_by({ "id" => session["user_id"] }) != nil %>
+      <h3 class="mt-4">Log a new sales activity</h3>
+
+      <form action="/activities" method="post">
+        <div class="mb-3 d-flex align-items-center gap-2">
+          <label for="contact_id_select" class="form-label mb-0">With</label>
+          <select name="contact_id" id="contact_id_select" class="form-select w-auto">
+            <% for contact in @contacts %>
+              <option value="<%= contact["id"] %>"><%= contact["first_name"] %> <%= contact["last_name"] %></option>
+            <% end %>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <textarea name="note" class="form-control" rows="4"></textarea>
+        </div>
+
+        <input type="hidden" name="activity_type" value="call">
+
+        <button class="btn btn-dark">Submit</button>
+      </form>
+    <% end %>
   </div>
 </div>
